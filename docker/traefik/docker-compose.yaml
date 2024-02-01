@@ -1,0 +1,47 @@
+version: '3.8'
+
+networks:
+  discovery:
+    external: true
+
+services:
+  traefik:
+    image: traefik:v2.11
+    container_name: traefik
+    restart: unless-stopped
+
+    security_opt:
+      - no-new-privileges:true
+
+    networks:
+      - discovery
+
+    ports:
+      - 80:80
+      - 443:443
+
+    environment:
+      - NAMECHEAP_API_USER=${NAMECHEAP_API_USER}
+      - NAMECHEAP_API_KEY=${NAMECHEAP_API_KEY}
+
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro # allow Traefik to listen to Docker events
+      - ${TRAEFIK_DIR}/acme.json:/acme.json # stores ACME (HTTPS) certificates
+
+    labels:
+      - traefik.enable=true
+
+      # "admin" middleware definition
+      # to be used by services that do not have their own security
+      # generate using htpasswd -nbB serveradmin mypassword
+      - traefik.http.middlewares.admin.basicauth.users=${HTTP_BASIC_USER}:${HTTP_BASIC_PWD}
+
+      # expose the traefik dashboard
+      - traefik.http.routers.traefik-https.entrypoints=websecure
+      - traefik.http.routers.traefik-https.rule=Host(`traefik.${DOMAIN_NAME}`)
+      - traefik.http.routers.traefik-https.service=api@internal
+      - traefik.http.routers.traefik-https.middlewares=admin
+      - traefik.http.routers.traefik-https.tls.certresolver=letsencrypt
+      - traefik.http.routers.traefik-https.tls.domains[0].main=${DOMAIN_NAME}
+      - traefik.http.routers.traefik-https.tls.domains[0].sans=*.${DOMAIN_NAME}
