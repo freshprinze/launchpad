@@ -1,0 +1,9 @@
+- name: Add Users
+  hosts: all
+  vars:
+    username: serveradmin
+    password: "{{ '4TuDsZAbPaN4' | password_hash('sha512') }}"
+    user_groups: sudo
+    user_shell: '/bin/bash'
+  roles:
+    - role: add-sudo-user

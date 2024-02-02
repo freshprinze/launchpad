@@ -1,0 +1,12 @@
+---
+- name: Display Username Entered
+  ansible.builtin.debug:
+    msg: "The username is: {{ username }}"
+
+- name: Display default Password
+  ansible.builtin.debug:
+    msg: "Password: {{ password }}"
+
+- name: Store Password
+  ansible.builtin.set_fact:
+    setting_password: "{{ password }}"

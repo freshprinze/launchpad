@@ -1,0 +1,26 @@
+---
+- name: Create group
+  ansible.builtin.group:
+    name: "{{ username }}"
+    state: present
+  become: true
+
+- name: Create User
+  ansible.builtin.user:
+    name: "{{ username }}"
+    shell: "{{ user_shell }}"
+    group: "{{ username }}"
+    groups: "{{ user_groups }}"
+    createhome: true
+    home: "/home/{{ username }}"
+    password: "{{ password }}"
+    state: present
+  become: true
+
+- name: Change ownership of home directory
+  ansible.builtin.file:
+    path: "/home/{{ username }}"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    state: directory
+  become: true
