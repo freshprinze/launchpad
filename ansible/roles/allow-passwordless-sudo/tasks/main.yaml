@@ -1,12 +1,13 @@
 ---
+# - name: Test
+#   ansible.builtin.debug:
+#     msg: 'Test {{ server_test  }}'
+
 - name: Display user details
   ansible.builtin.include_tasks: display_user_details.yaml
 
 - name: Install required packages
   ansible.builtin.include_tasks: install_required_packages.yaml
-
-- name: Add user
-  ansible.builtin.include_tasks: add_user.yaml
 
 - name: Add user to sudoers
   ansible.builtin.include_tasks: add_to_sudoers.yaml

@@ -1,0 +1,15 @@
+- name: Allow Passwordless Sudo Access
+  hosts: all
+  vars:
+    username: '{{ server_admin_user }}'
+  roles:
+    - role: allow-passwordless-sudo
+
+- name: Merge public keys
+  hosts: all
+  roles:
+    - role: update-authorized-key
+  vars:
+    username: '{{ server_admin_user }}'
+    keys:
+      - id_ed25519_homelab_asiri-devops

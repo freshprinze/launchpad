@@ -1,0 +1,23 @@
+---
+# - name: Setup pip
+#   become: true
+#   block:
+#     - name: Update apt repo and cache
+#       ansible.builtin.apt:
+#         update_cache: true
+#         cache_valid_time: 3600
+
+#     - name: Install Python pip
+#       ansible.builtin.apt:
+#         name: '{{ item }}'
+#       with_items:
+#         - python3-pip
+# - name: Install Docker integration for Python package
+#   ansible.builtin.pip:
+#     name: docker
+#     extra_args: '--break-system-packages'
+
+# - name: Install Docker Compose Python package
+#   ansible.builtin.pip:
+#     name: docker-compose
+#     extra_args: '--break-system-packages'

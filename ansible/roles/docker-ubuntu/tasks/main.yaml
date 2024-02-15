@@ -1,0 +1,6 @@
+---
+- name: Install docker
+  ansible.builtin.include_tasks: install_docker.yaml
+
+- name: Install required packages
+  ansible.builtin.include_tasks: install_required_packages.yaml

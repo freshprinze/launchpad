@@ -1,0 +1,18 @@
+- name: Install Docker
+  hosts: portainer_nodes
+  roles:
+    - role: docker-ubuntu
+
+- name: Copy module folders
+  hosts: portainer_nodes
+  roles:
+    - role: copy-folder
+  vars:
+    modules:
+      traefik: '../docker/traefik'
+      portainer: '../docker/portainer'
+
+# - name: Setup modules
+#   hosts: portainer_nodes
+#   roles:
+#     - role: setup-modules

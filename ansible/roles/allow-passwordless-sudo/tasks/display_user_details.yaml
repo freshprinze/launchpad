@@ -1,4 +1,4 @@
 ---
-- name: Display username being added
+- name: Display username beinng allowed passwordless sudo
   ansible.builtin.debug:
     msg: "sudo username is: {{ username }}"

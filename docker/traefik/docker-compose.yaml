@@ -28,6 +28,8 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro # allow Traefik to listen to Docker events
       - ${TRAEFIK_DIR}/acme.json:/acme.json # stores ACME (HTTPS) certificates
+      - ${TRAEFIK_DIR}/data/traefik.yaml:/traefik.yml:ro
+      - ${TRAEFIK_DIR}/data/config.yaml:/config.yml:ro
 
     labels:
       - traefik.enable=true
@@ -39,7 +41,7 @@ services:
 
       # expose the traefik dashboard
       - traefik.http.routers.traefik-https.entrypoints=websecure
-      - traefik.http.routers.traefik-https.rule=Host(`traefik.${DOMAIN_NAME}`)
+      - traefik.http.routers.traefik-https.rule=Host(`${SERVICE_URL}`)
       - traefik.http.routers.traefik-https.service=api@internal
       - traefik.http.routers.traefik-https.middlewares=admin
       - traefik.http.routers.traefik-https.tls.certresolver=letsencrypt
