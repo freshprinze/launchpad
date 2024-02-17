@@ -1,0 +1,46 @@
+---
+version: '3.9'
+
+networks:
+  discovery:
+    external: true
+
+services:
+  pi.alert:
+    container_name: Pi.Alert
+    mem_limit: 2g
+    cpu_shares: 768
+
+    image: jokobsk/pi.alert:latest
+    restart: on-failure:5
+
+    networks:
+      - discovery
+
+    ports:
+      - "20211:20211"
+
+    security_opt:
+      - no-new-privileges:true
+
+    volumes:
+      - ${SERVICE_DIR}/config:/home/pi/pialert/config:rw
+      - ${SERVICE_DIR}/pialert/db:/home/pi/pialert/db:rw
+      - ${SERVICE_DIR}/logs:/home/pi/pialert/front/log:rw
+
+    environment:
+      TZ: Asia/Colombo
+      PORT: 20211
+      HOST_USER_ID: 1000
+      HOST_USER_GID: 1000
+
+    healthcheck:
+      test: curl -f http://localhost:20211/ || exit 1
+
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.pi-alert.rule=Host(`${SERVICE_URL}`)'
+      - 'traefik.http.routers.pi-alert.entrypoints=websecure'
+      - 'traefik.http.routers.pi-alert.tls=true'
+      - 'traefik.http.services.pi-alert.loadBalancer.server.port=20211'
+      - 'traefik.docker.network=discovery'
