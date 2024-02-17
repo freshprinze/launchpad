@@ -11,6 +11,7 @@
     modules:
       traefik: '../docker/traefik'
       portainer: '../docker/portainer'
+      dashy: '../docker/dashy'
 
 # - name: Setup modules
 #   hosts: portainer_nodes
