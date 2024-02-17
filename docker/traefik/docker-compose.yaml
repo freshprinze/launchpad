@@ -27,10 +27,10 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro # allow Traefik to listen to Docker events
-      - ${TRAEFIK_DIR}/acme.json:/acme.json # stores ACME (HTTPS) certificates
-      - ${TRAEFIK_DIR}/data/traefik.yaml:/traefik.yaml:ro
-      - ${TRAEFIK_DIR}/data/config.yaml:/config.yaml:ro
-      - ${TRAEFIK_DIR}/logs/:/logs/
+      - ${SERVICE_DIR}/acme.json:/acme.json # stores ACME (HTTPS) certificates
+      - ${SERVICE_DIR}/data/traefik.yaml:/traefik.yaml:ro
+      - ${SERVICE_DIR}/data/config.yaml:/config.yaml:ro
+      - ${SERVICE_DIR}/logs/:/logs/
 
     labels:
       - traefik.enable=true
