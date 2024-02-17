@@ -9,9 +9,10 @@
     - role: copy-folder
   vars:
     modules:
-      traefik: '../docker/traefik'
-      portainer: '../docker/portainer'
-      dashy: '../docker/dashy'
+      # traefik: '../docker/traefik'
+      # portainer: '../docker/portainer'
+      # dashy: '../docker/dashy'
+      'uptime-kuma': '../docker/uptime-kuma'
 
 # - name: Setup modules
 #   hosts: portainer_nodes
