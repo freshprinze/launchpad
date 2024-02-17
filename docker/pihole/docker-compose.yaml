@@ -1,28 +1,33 @@
-version: '3'
+version: '3.8'
 
 # More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
 services:
-    pihole:
-        container_name: pihole
-        image: pihole/pihole:latest
-        restart: unless-stopped        
-        ports:
-            - '53:53/tcp'
-            - '53:53/udp'
-            - '67:67/udp'
-            - '80:80/tcp'
-        environment:
-            TZ: 'Asia/Colombo'
-            WEBPASSWORD: ${PIHOLE_WEBPASSWORD}
-            WEBTHEME: 'default-dark'
-            VIRTUAL_HOST: 'pihole1.local.theinquisitive.me'
-        # Volumes store your data between container upgrades
-        volumes:
-            - '~/pihole/etc-pihole/:/etc/pihole/'
-            - '~/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/'
-        # Recommended but not required (DHCP needs NET_ADMIN)
-        #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
-        cap_add:
-            - NET_ADMIN
-        labels:
-            - 'traefik.enable=true'
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    restart: unless-stopped
+
+    ports:
+      - '53:53/tcp'
+      - '53:53/udp'
+    #   - '67:67/udp'
+      - '80:80/tcp'
+
+    environment:
+      TZ: 'Asia/Colombo'
+      WEBPASSWORD: ${PIHOLE_WEBPASSWORD}
+      WEBTHEME: 'default-dark'
+      VIRTUAL_HOST: 'pihole1.local.theinquisitive.me'
+
+    # Volumes store your data between container upgrades
+    volumes:
+      - '${PIHOLE_DIR}/etc-pihole/:/etc/pihole/'
+      - '${PIHOLE_DIR}/etc-dnsmasq.d/:/etc/dnsmasq.d/'
+
+    # Recommended but not required (DHCP needs NET_ADMIN)
+    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+    cap_add:
+      - NET_ADMIN
+
+    labels:
+      - 'traefik.enable=true'
