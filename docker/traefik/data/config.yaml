@@ -29,6 +29,16 @@ http:
       tls: {}
       service: mahasen
 
+    ## Desktop Switch
+    gamunu:
+      entryPoints:
+        - websecure
+      rule: "Host(`gamunu.local.theinquisitive.me`)"
+      middlewares:
+        - default-headers
+      tls: {}
+      service: gamunu
+
     ## POE Sw in Office Room
     gajaba:
       entryPoints:
@@ -71,14 +81,14 @@ http:
       service: capella
 
     ## synology
-    synology:
+    antaresgo:
       entryPoints:
         - websecure
-      rule: "Host(`synology.local.theinquisitive.me`)"
+      rule: "Host(`antaresgo.local.theinquisitive.me`)"
       middlewares:
         - default-headers
       tls: {}
-      service: synology
+      service: antaresgo
 
   services:
     # dashy:
@@ -100,6 +110,13 @@ http:
         serversTransport: insecureTransport
         servers:
           - url: "http://10.99.99.2"
+        passHostHeader: true
+
+    gamunu:
+      loadBalancer:
+        serversTransport: insecureTransport
+        servers:
+          - url: "http://10.99.99.3"
         passHostHeader: true
 
     gajaba:
@@ -128,10 +145,10 @@ http:
           - url: "https://172.16.20.5:8006"
         passHostHeader: true
 
-    synology:
+    antaresgo:
       loadBalancer:
         servers:
-          - url: "http://192.168.0.11:5000"
+          - url: "http://172.16.20.3:5000"
         passHostHeader: true
 
   # allow self-signed certificates for proxied web services
