@@ -19,6 +19,35 @@ http:
       tls: {}
       service: pfsense
 
+    ## CRS
+    mahsen:
+      entryPoints:
+        - websecure
+      rule: "Host(`mahasen.local.theinquisitive.me`)"
+      middlewares:
+        - default-headers
+      tls: {}
+      service: mahasen
+
+    ## POE Sw in Office Room
+    gajaba:
+      entryPoints:
+        - websecure
+      rule: "Host(`gajaba.local.theinquisitive.me`)"
+      middlewares:
+        - default-headers
+      tls: {}
+      service: gajaba
+
+    omada:
+      entryPoints:
+        - websecure
+      rule: "Host(`omada.local.theinquisitive.me`)"
+      middlewares:
+        - default-headers
+      tls: {}
+      service: omada
+
     ## pihole
     pathos:
       entryPoints:
@@ -64,6 +93,27 @@ http:
         serversTransport: insecureTransport
         servers:
           - url: "https://192.168.1.1:10443"
+        passHostHeader: true
+
+    mahasen:
+      loadBalancer:
+        serversTransport: insecureTransport
+        servers:
+          - url: "http://10.99.99.2"
+        passHostHeader: true
+
+    gajaba:
+      loadBalancer:
+        serversTransport: insecureTransport
+        servers:
+          - url: "https://10.99.99.4"
+        passHostHeader: true
+
+    omada:
+      loadBalancer:
+        serversTransport: insecureTransport
+        servers:
+          - url: "https://10.99.99.5"
         passHostHeader: true
 
     pathos:
