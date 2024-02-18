@@ -1,0 +1,38 @@
+---
+version: '3.8'
+
+networks:
+  discovery:
+    external: true
+
+services:
+  syncthing:
+    image: syncthing/syncthing
+    container_name: syncthing
+    restart: unless-stopped
+
+    hostname: syncthing
+
+    networks:
+      - discovery
+
+    ports:
+      - 8384:8384 # Web UI
+      - 22000:22000/tcp # TCP file transfers
+      - 22000:22000/udp # QUIC file transfers
+      - 21027:21027/udp # Receive local discovery broadcasts
+
+    environment:
+      - PUID=1000
+      - PGID=1000
+
+    volumes:
+      - ${SERVICE_DIR}/data:/var/syncthing
+
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.syncthing.rule=Host(`${SERVICE_URL}`)'
+      - 'traefik.http.routers.syncthing.entrypoints=websecure'
+      - 'traefik.http.routers.syncthing.tls=true'
+      - 'traefik.http.services.syncthing.loadBalancer.server.port=8384'
+      # - 'traefik.docker.network=discovery'

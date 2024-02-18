@@ -15,3 +15,8 @@ pihole_nodes:
   hosts:
     pathos.local.theinquisitive.me:
       ansible_host: 172.16.20.6
+
+storage_nodes:
+  hosts:
+    rezerva.local.theinquisitive.me:
+      ansible_host: 172.16.20.7

@@ -15,25 +15,16 @@
 
 ## Tasks
 
-### Setup Portainer
+### Setup Ansible Access
 
-1. Configure SSH access
-
-  ```sh
-  ansible-playbook configure-ssh-access.yaml -l portainer_nodes --user=serveradmin -K
-  ```
-
-2. 
-
-
-1. Check if hosts are reachable (note the 'lowercase k')
+1. Add serveradmin Sudo User
 
 ```sh
-ansbile portainer_nodes -m ping --user=serveradmin -k
+  ansible-playbook add-sudo-user.yaml -l <pi_nodes> --user=<root_user> -k
 ```
 
-2. Execute playbook with root priviledges (note the 'uppercase k')
+2. Configure SSH access
 
 ```sh
-ansible-playbook adduser-sudo.yaml -l portainer_nodes --user=serveradmin -K
+  ansible-playbook configure-ssh-access.yaml -l portainer_nodes --user=serveradmin -K
 ```

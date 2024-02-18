@@ -2,11 +2,11 @@
 - name: Create sudo user
   ansible.builtin.user:
     name: "{{ username }}"
+    password: "{{ password }}"
     shell: "{{ user_shell }}"
   become: true
-
-- name: Add ansbile ssh key
-  ansible.builtin.authorized_key:
-    user: "{{ username }}"
-    key: "{{ ansbile_user_public_ssh_key }}"
-  become: true
+# - name: Add ansbile ssh key
+#   ansible.builtin.authorized_key:
+#     user: "{{ username }}"
+#     key: "{{ ansbile_user_public_ssh_key }}"
+#   become: true

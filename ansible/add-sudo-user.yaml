@@ -1,9 +1,9 @@
-- name: Create Ansible User
+- name: Create Server Admin User
   hosts: all
   vars:
-    username: ansible
-    # password: "{{ 'dkeaj86358' | password_hash('sha512') }}"
+    username: serveradmin
+    password: "{{ '4TuDsZAbPaN4' | password_hash('sha512') }}"
     user_shell: '/bin/bash'
-    ansbile_user_public_ssh_key: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOnI/Gu3MHy8KJBYSPi5IiHgMiBVKpktCYsS5SmZpJ4e ansible@local.theinquisitive.me'
+    # ansbile_user_public_ssh_key: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOnI/Gu3MHy8KJBYSPi5IiHgMiBVKpktCYsS5SmZpJ4e ansible@local.theinquisitive.me'
   roles:
     - role: add-sudo-user
