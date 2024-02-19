@@ -14,7 +14,9 @@
       # dashy: '../docker/dashy'
       # 'uptime-kuma': '../docker/uptime-kuma'
       # syncthing: '../docker/syncthing'
-      paperless: '../docker/paperless'
+      # paperless: '../docker/paperless'
+      netboot: '../docker/netboot'
+      webnut: '../docker/webnut'
 # - name: Setup modules
 #   hosts: portainer_nodes
 #   roles:
