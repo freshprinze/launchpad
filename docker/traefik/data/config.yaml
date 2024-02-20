@@ -49,6 +49,26 @@ http:
       tls: {}
       service: gajaba
 
+    ## 16 port managed sw in Office Room
+    vijaya:
+      entryPoints:
+        - websecure
+      rule: "Host(`vijaya.local.theinquisitive.me`)"
+      middlewares:
+        - default-headers
+      tls: {}
+      service: vijaya
+
+    ## 8 port managed sw in Office Room
+    ravana:
+      entryPoints:
+        - websecure
+      rule: "Host(`ravana.local.theinquisitive.me`)"
+      middlewares:
+        - default-headers
+      tls: {}
+      service: ravana
+
     omada:
       entryPoints:
         - websecure
@@ -124,6 +144,20 @@ http:
         serversTransport: insecureTransport
         servers:
           - url: "https://10.99.99.4"
+        passHostHeader: true
+
+    vijaya:
+      loadBalancer:
+        serversTransport: insecureTransport
+        servers:
+          - url: "http://10.99.99.8"
+        passHostHeader: true
+
+    ravana:
+      loadBalancer:
+        serversTransport: insecureTransport
+        servers:
+          - url: "http://10.99.99.7"
         passHostHeader: true
 
     omada:
