@@ -110,6 +110,16 @@ http:
       tls: {}
       service: antaresgo
 
+    ## homeassistant
+    ha:
+      entryPoints:
+        - websecure
+      rule: "Host(`ha.local.theinquisitive.me`)"
+      middlewares:
+        - default-headers
+      tls: {}
+      service: ha
+
   services:
     # dashy:
     #   loadBalancer:
@@ -183,6 +193,12 @@ http:
       loadBalancer:
         servers:
           - url: "http://172.16.20.3:5000"
+        passHostHeader: true
+
+    ha:
+      loadBalancer:
+        servers:
+          - url: "http://172.16.30.7:8123"
         passHostHeader: true
 
   # allow self-signed certificates for proxied web services
