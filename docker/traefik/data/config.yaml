@@ -120,6 +120,46 @@ http:
       tls: {}
       service: ha
 
+    ## qbittorrent
+    qbittorrent:
+      entryPoints:
+        - websecure
+      rule: "Host(`qtorrent.local.theinquisitive.me`)"
+      middlewares:
+        - default-headers
+      tls: {}
+      service: qbittorrent
+
+    ## prowlarr
+    prowlarr:
+      entryPoints:
+        - websecure
+      rule: "Host(`prowlarr.local.theinquisitive.me`)"
+      middlewares:
+        - default-headers
+      tls: {}
+      service: prowlarr
+
+    ## sonarr
+    sonarr:
+      entryPoints:
+        - websecure
+      rule: "Host(`sonarr.local.theinquisitive.me`)"
+      middlewares:
+        - default-headers
+      tls: {}
+      service: sonarr
+
+    ## radarr
+    radarr:
+      entryPoints:
+        - websecure
+      rule: "Host(`radarr.local.theinquisitive.me`)"
+      middlewares:
+        - default-headers
+      tls: {}
+      service: radarr
+
   services:
     # dashy:
     #   loadBalancer:
@@ -199,6 +239,30 @@ http:
       loadBalancer:
         servers:
           - url: "http://172.16.30.7:8123"
+        passHostHeader: true
+
+    qbittorrent:
+      loadBalancer:
+        servers:
+          - url: "http://172.16.20.40:8085"
+        passHostHeader: true
+
+    prowlarr:
+      loadBalancer:
+        servers:
+          - url: "http://172.16.20.40:9696"
+        passHostHeader: true
+
+    sonarr:
+      loadBalancer:
+        servers:
+          - url: "http://172.16.20.40:8989"
+        passHostHeader: true
+
+    radarr:
+      loadBalancer:
+        servers:
+          - url: "http://172.16.20.40:7878"
         passHostHeader: true
 
   # allow self-signed certificates for proxied web services

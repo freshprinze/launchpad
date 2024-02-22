@@ -1,6 +1,5 @@
-version: "3"
+version: '3.8'
 services:
-
   # gluetun:
   #   image: qmcgaw/gluetun
   #   container_name: gluetun
@@ -35,77 +34,95 @@ services:
   #     # See https://github.com/qdm12/gluetun-wiki/blob/main/setup/servers.md#update-the-vpn-servers-list
   #     - UPDATER_PERIOD=24h
 
-
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
-    # network_mode: "service:gluetun"
+    restart: unless-stopped
+
+    ports:
+      - '9696:9696'
+
     environment:
       - PUID=${USER_ID}
       - PGID=${GROUP_ID}
       - TZ=${TIMEZONE}
+
     volumes:
-      - ./prowlarr:/config
+      - ${SERVICE_DIR}/prowlarr:/config
+
     healthcheck:
-      test: [ "CMD", "curl", "--fail", "http://127.0.0.1:9696/prowlarr/ping" ]
+      test: ['CMD', 'curl', '--fail', 'http://127.0.0.1:9696/prowlarr/ping']
       interval: 30s
       retries: 10
-    restart: unless-stopped
-
 
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
+    restart: unless-stopped
+
+    ports:
+      - '8989:8989' # port mapping
+
     # network_mode: "service:gluetun"
     environment:
       - PUID=${USER_ID}
       - PGID=${GROUP_ID}
       - TZ=${TIMEZONE}
-    volumes:
-      - ./sonarr:/config
-      - ${DATA_ROOT}:/data
-    healthcheck:
-      test: [ "CMD", "curl", "--fail", "http://127.0.0.1:8989/sonarr/ping" ]
-      interval: 30s
-      retries: 10      
-    restart: unless-stopped
 
+    volumes:
+      - ${SERVICE_DIR}/sonarr:/config
+      - ${SERVICE_DIR}/data:/data
+
+    healthcheck:
+      test: ['CMD', 'curl', '--fail', 'http://127.0.0.1:8989/sonarr/ping']
+      interval: 30s
+      retries: 10
 
   radarr:
     image: lscr.io/linuxserver/radarr
     container_name: radarr
+    restart: unless-stopped
+
+    ports:
+      - '7878:7878' # port mapping
+
     environment:
       - PUID=${USER_ID}
       - PGID=${GROUP_ID}
       - TZ=${TIMEZONE}
+
     volumes:
-      - ./radarr:/config
-      - ${DATA_ROOT}:/data
+      - ${SERVICE_DIR}/radarr:/config
+      - ${SERVICE_DIR}/data:/data
+
     healthcheck:
-      test: [ "CMD", "curl", "--fail", "http://127.0.0.1:7878/radarr/ping" ]
+      test: ['CMD', 'curl', '--fail', 'http://127.0.0.1:7878/radarr/ping']
       interval: 30s
       retries: 10
-    restart: unless-stopped
-
 
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent
     container_name: qbittorrent
-    # network_mode: "service:gluetun"
+    restart: unless-stopped
+
+    # depends_on:
+    #   - gluetun
+    ports:
+      - '8085:8085' # port mapping
+
     environment:
       - PUID=${USER_ID}
       - PGID=${GROUP_ID}
       - TZ=${TIMEZONE}
       - WEBUI_PORT=8085
+
     volumes:
-      - ./qbittorrent:/config
-      - ${DATA_ROOT}:/data/torrents
-    # depends_on:
-    #   - gluetun
+      - ${SERVICE_DIR}/qbittorrent:/config
+      - ${SERVICE_DIR}/data:/downloads
+
     healthcheck:
       # Container may fail if the PIA's token expired, so mark as unhealthy when there is no internet connection
       # see: https://github.com/qdm12/gluetun/issues/641#issuecomment-933856220
-      test: [ "CMD", "curl", "--fail", "http://127.0.0.1:8080", "https://google.com" ]
+      test: ['CMD', 'curl', '--fail', 'http://127.0.0.1:8080', 'https://google.com']
       interval: 30s
-      retries: 10    
-    restart: always    
+      retries: 10

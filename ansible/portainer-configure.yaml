@@ -9,7 +9,8 @@
     - role: copy-folder
   vars:
     modules:
-      traefik: '../docker/traefik'
+      # traefik: '../docker/traefik'
+      'media-downloader': '../docker/media-downloader'
       # portainer: '../docker/portainer'
       # dashy: '../docker/dashy'
       # 'uptime-kuma': '../docker/uptime-kuma'
