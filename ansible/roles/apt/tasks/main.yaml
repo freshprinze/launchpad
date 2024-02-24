@@ -1,5 +1,13 @@
-- name: apt
+- name: Print variables
+  debug:
+    msg: "Distribution {{ ansible_distribution }}"
+
+- name: Print variables
+  debug:
+    msg: "OS family {{ ansible_os_family }}"
+
+- name: Update apt packages
   become: true
-  apt:
-    update_cache: yes
-    upgrade: yes
+  ansible.builtin.apt:
+    update_cache: true
+    upgrade: true

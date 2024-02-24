@@ -19,6 +19,15 @@ http:
       tls: {}
       service: pfsense
 
+    portainer-capella:
+      entryPoints:
+        - websecure
+      rule: "Host(`portainer-capella.local.theinquisitive.me`)"
+      middlewares:
+        - default-headers
+      tls: {}
+      service: portainer-capella
+
     ## CRS
     mahsen:
       entryPoints:
@@ -173,6 +182,13 @@ http:
         serversTransport: insecureTransport
         servers:
           - url: "https://192.168.1.1:10443"
+        passHostHeader: true
+
+    portainer-capella:
+      loadBalancer:
+        serversTransport: insecureTransport
+        servers:
+          - url: "https://172.16.20.40:9443"
         passHostHeader: true
 
     mahasen:

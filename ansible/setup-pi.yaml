@@ -1,0 +1,46 @@
+- name: Allow password-less sudo access
+  hosts: all
+  vars:
+    username: '{{ server_admin_user }}'
+  roles:
+    - role: allow-passwordless-sudo
+
+- name: Merge public keys
+  hosts: all
+  roles:
+    - role: update-authorized-key
+  vars:
+    username: '{{ server_admin_user }}'
+    keys:
+      - id_ed25519_homelab_asiri-devops
+
+- name: Update Packages
+  hosts: all
+  roles:
+    - role: apt
+
+- name: Setup docker
+  hosts: all
+  roles:
+    - role: setup-docker
+
+- name: Setup traefik
+  hosts: all
+  roles:
+    - role: copy-folder
+  vars:
+    modules:
+      traefik: '../docker/traefik'
+  tags: traefik
+
+- name: Copy module folders
+  hosts: all
+  roles:
+    - role: copy-folder
+  vars:
+    modules:
+      portainer: '../docker/portainer'
+      dashy: '../docker/dashy'
+      'uptime-kuma': '../docker/uptime-kuma'
+      # webnut: '../docker/webnut'
+  tags: mods

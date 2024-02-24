@@ -18,6 +18,9 @@ services:
     networks:
       - discovery
 
+    ports:
+      - 9443:9443
+
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro

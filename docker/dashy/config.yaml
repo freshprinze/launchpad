@@ -1,205 +1,537 @@
----
+appConfig:
+  theme: cyberpunk
+  layout: auto
+  iconSize: medium
+  language: en
 pageInfo:
   title: Home Lab
-appConfig:
-  theme: nord-frost
+  description: ""
+  navLinks: []
+  footerText: ""
 sections:
   - name: Productivity
     displayData:
       collapsed: false
       cols: 2
+      sortBy: default
+      rows: 1
+      hideForGuests: false
     items:
-      - title: Archive Box
+      - &ref_0
+        title: Archive Box
         description: Web site archiving
         icon: productivity/archive-box.png
-      - title: Baserow
+        id: 0_1302_archivebox
+      - &ref_1
+        title: Baserow
         description: Feature-rich dynamic tables (similar to Airtable)
         icon: productivity/baserow.png
-      - title: Bookstack
+        id: 1_1302_baserow
+      - &ref_2
+        title: Bookstack
         description: Self-hosted Wiki
         icon: productivity/bookstack.png
-      - title: Domain Mod
+        id: 2_1302_bookstack
+      - &ref_3
+        title: Domain Mod
         description: Manage domains and other internet assets
         icon: productivity/domain-mod.png
-      - title: Firefly
+        id: 3_1302_domainmod
+      - &ref_4
+        title: Firefly
         description: Financial manager, for keeping track of expenses, income, budgets, etc
         icon: productivity/firefly.png
-      - title: Fresh RSS
+        id: 4_1302_firefly
+      - &ref_5
+        title: Fresh RSS
         description: RSS feed reader and news aggregator
         icon: productivity/fresh-rss.png
-      - title: GifWit
+        id: 5_1302_freshrss
+      - &ref_6
+        title: GifWit
         description: Personal GIF library
         icon: productivity/gifwit.png
-      - title: Git Tea
+        id: 6_1302_gifwit
+      - &ref_7
+        title: Git Tea
         description: Git service, hosting mirrors of my public repos
         icon: productivity/git-tea.png
-      - title: LessPass
+        id: 7_1302_gittea
+      - &ref_8
+        title: LessPass
         description: Deterministic stateless password manager
         icon: productivity/lesspass.png
-      - title: NextCloud
+        id: 8_1302_lesspass
+      - &ref_9
+        title: NextCloud
         description: Cloud office suit and collaboration platform
         icon: productivity/nextcloud.png
-      - title: Paperless
+        id: 9_1302_nextcloud
+      - &ref_10
+        title: Paperless
         description: Scan, index, and archive physical paper documents
-        icon: productivity/paperless.png
-      - title: Photo Prism
+        icon: hl-paperless
+        url: https://paperless.local.theinquisitive.me/
+        target: newtab
+        id: 10_1302_paperless
+      - &ref_11
+        title: Photo Prism
         description: Browsing, organizing, and sharing photos and albums
         icon: productivity/photo-prism.png
-      - title: Standard Notes
+        id: 11_1302_photoprism
+      - &ref_12
+        title: Standard Notes
         description: Encrypted notes app, with extensions and desktop + mobile apps
         icon: productivity/standard-notes.png
-      - title: Syncthing
+        id: 12_1302_standardnotes
+      - &ref_13
+        title: Syncthing
         description: Peer-to-peer file synchronization
-        icon: productivity/syncthing.png
-      - title: VS Code Web
-        description: Cloud based VS Code development environment
-        icon: productivity/vs-code.png
-      - title: Wallabag
+        icon: hl-syncthing
+        url: https://syncthing.local.theinquisitive.me/
+        id: 13_1302_syncthing
+      - &ref_14
+        title: Wallabag
         description: Saved URLs and bookmarks
         icon: productivity/wallabag.png
-      - title: XBrowserSync
+        id: 14_1302_wallabag
+      - &ref_15
+        title: XBrowserSync
         description: Bookmarks, history and browser sync
         icon: productivity/x-browser-sync.png
+        id: 15_1302_xbrowsersync
+      - &ref_16
+        title: Synching Local
+        icon: hl-syncthing
+        url: http://localhost:8384/
+        target: newtab
+        id: 16_1302_synchinglocal
+    filteredItems:
+      - *ref_0
+      - *ref_1
+      - *ref_2
+      - *ref_3
+      - *ref_4
+      - *ref_5
+      - *ref_6
+      - *ref_7
+      - *ref_8
+      - *ref_9
+      - *ref_10
+      - *ref_11
+      - *ref_12
+      - *ref_13
+      - *ref_14
+      - *ref_15
+      - *ref_16
   - name: Firewall
     items:
-      - title: OPNsense
+      - &ref_17
+        title: Pfsense
         description: Firewall Central Management
-        icon: networking/opnsense.png
-        target: iframe
-      - title: NetData
+        icon: hl-pfsense
+        url: https://pfsense.local.theinquisitive.me/
+        target: newtab
+        id: 0_822_pfsense
+      - &ref_18
+        title: NetData
         description: System resource usage on firewall
         icon: networking/netdata.png
-      - title: MalTrail
+        id: 1_822_netdata
+      - &ref_19
+        title: MalTrail
         description: Malicious traffic detection system
         icon: networking/maltrail.png
-      - title: Ntopng
+        id: 2_822_maltrail
+      - &ref_20
+        title: Ntopng
         description: Network traffic probe and network use monitor
         icon: networking/ntop.png
-      - title: Sensei
+        id: 3_822_ntopng
+      - &ref_21
+        title: Sensei
         description: Additional data features
         icon: networking/sensei.png
-      - title: Monit
+        id: 4_822_sensei
+      - &ref_22
+        title: Monit
         description: Status of firewall system alerts
         icon: networking/monit.png
-      - title: Firewall Logs
+        id: 5_822_monit
+      - &ref_23
+        title: Firewall Logs
         description: Real-time view of firewall data and logs
         icon: networking/logs.png
-      - title: WireGuard
+        id: 6_822_firewalllogs
+      - &ref_24
+        title: WireGuard
         description: Manage WireGuard client and server on firewall
         icon: networking/wireguard.png
+        id: 7_822_wireguard
+    filteredItems:
+      - *ref_17
+      - *ref_18
+      - *ref_19
+      - *ref_20
+      - *ref_21
+      - *ref_22
+      - *ref_23
+      - *ref_24
   - name: Networks
     items:
-      - title: Pi-Hole
-        description: DNS settings for ad & tracker blocking
-        icon: networking/pihole.png
-      - title: PiAlert
+      - &ref_25
+        title: Uptime
+        description: Uptime Kuma
+        icon: hl-uptime-kuma
+        url: https://uptime.local.theinquisitive.me/
+        target: newtab
+        id: 0_861_uptime
+      - &ref_26
+        title: Traefik
+        description: Reverse Proxy
+        icon: hl-traefik
+        url: https://traefik.local.theinquisitive.me/
+        target: newtab
+        id: 1_861_traefik
+      - &ref_27
+        title: Pathos
+        description: Pi-Hole DNS
+        icon: hl-pi-hole
+        url: https://pathos.local.theinquisitive.me/
+        target: newtab
+        id: 2_861_pathos
+      - &ref_28
+        title: PiAlert
         description: Presence monitoring and ARP scanning
-        icon: networking/pialert.png
-      - title: SmokePing
+        icon: hl-pi-alert
+        id: 3_861_pialert
+      - &ref_29
+        title: SmokePing
         description: Network latency monitoring
         icon: networking/smokeping.png
-      - title: StatPing
+        id: 4_861_smokeping
+      - &ref_30
+        title: StatPing
         description: Up-time monitoring for local service
         icon: networking/statping.png
-      - title: LibreSpeed
+        id: 5_861_statping
+      - &ref_31
+        title: LibreSpeed
         description: Local network speed and latency test
         icon: networking/librespeed.png
-      - title: Grafana
+        id: 6_861_librespeed
+      - &ref_32
+        title: Grafana
         description: Data visualised on dashboards
-        icon: networking/grafana.png
+        icon: hl-grafana
+        id: 7_861_grafana
+    filteredItems:
+      - *ref_25
+      - *ref_26
+      - *ref_27
+      - *ref_28
+      - *ref_29
+      - *ref_30
+      - *ref_31
+      - *ref_32
   - name: System Maintence
     items:
-      - title: NetData
+      - &ref_33
+        title: NetData
         description: Real-time system resource usage
         icon: networking/netdata.png
-      - title: Portainer
-        description: Docker container management
-        icon: networking/portainer.png
-      - title: cAdvisor
+        id: 0_1593_netdata
+      - &ref_34
+        title: cAdvisor
         description: Container monitoring
         icon: networking/cadvisor.png
-      - title: Glances
+        id: 1_1593_cadvisor
+      - &ref_35
+        title: Glances
         description: Simple resource usage
         icon: networking/glances.png
-      - title: Dozzle
+        id: 2_1593_glances
+      - &ref_36
+        title: Dozzle
         description: Docker container web log viewer
         icon: networking/dozzle.png
-      - title: Prometheus
+        id: 3_1593_dozzle
+      - &ref_37
+        title: Prometheus
         description: System Statistics Aggregation with PromQL
-        icon: networking/prometheus.png
+        icon: hl-prometheus
+        id: 4_1593_prometheus
+      - &ref_38
+        title: Nut Server
+        url: https://nut.local.theinquisitive.me
+        target: newtab
+        id: 5_1593_nutserver
+      - &ref_39
+        title: Netboot
+        icon: hl-netboot
+        url: https://netboot.local.theinquisitive.me
+        target: newtab
+        id: 6_1593_netboot
+    filteredItems:
+      - *ref_33
+      - *ref_34
+      - *ref_35
+      - *ref_36
+      - *ref_37
+      - *ref_38
+      - *ref_39
   - name: External Services
     items:
-      - title: DuckDNS
+      - &ref_40
+        title: DuckDNS
         description: Dynamic DNS for fixed public IP
-        icon: networking/duckdns.png
-      - title: BorgBase
+        icon: hl-duckdns
+        id: 0_1703_duckdns
+      - &ref_41
+        title: BorgBase
         description: Off-site system Borg backups
         icon: networking/borgbase.png
         url: https://www.borgbase.com/repositories
-      - title: Mullvad
+        id: 1_1703_borgbase
+      - &ref_42
+        title: Mullvad
         description: Hosted VPN provider
         icon: networking/mullvad.png
         url: https://mullvad.net/en/account/
-      - title: ZeroTier
+        id: 2_1703_mullvad
+      - &ref_43
+        title: ZeroTier
         description: Secure networks between devices
         icon: networking/zeroteir.png
         url: https://my.zerotier.com/
-      - title: HealthChecks
+        id: 3_1703_zerotier
+      - &ref_44
+        title: HealthChecks
         description: Cron Job Monitoring
         icon: networking/healthchecks.png
         url: https://healthchecks.io/checks/
-      - title: ISP - Vodafone
-        description: Broadband internet provider
-        icon: networking/vodafone.png
-        url: https://myaccount.vodafone.co.uk/
+        id: 4_1703_healthchecks
+    filteredItems:
+      - *ref_40
+      - *ref_41
+      - *ref_42
+      - *ref_43
+      - *ref_44
   - name: Media
     items:
-      - title: Plex
+      - &ref_45
+        title: Plex
         description: Self-Hosted Media Streaming Service
-        icon: media/plex.png
-      - title: Tautulli
+        icon: hl-plex
+        id: 0_480_plex
+      - &ref_46
+        title: Tautulli
         description: Monitoring and statistics for Plex
         icon: media/tautulli.png
-      - title: Transmission
+        id: 1_480_tautulli
+      - &ref_47
+        title: Transmission
         description: Transmission remote for managing torrents
         icon: media/transmission.png
-      - title: Couch Potato
+        id: 2_480_transmission
+      - &ref_48
+        title: Couch Potato
         description: Automatic Movie Downloading via NZBs & Torrents
         icon: media/couch-potato.png
+        id: 3_480_couchpotato
+      - &ref_49
+        title: Prowlarr
+        icon: hl-prowlarr
+        url: https://prowlarr.local.theinquisitive.me
+        target: newtab
+        id: 4_480_prowlarr
+      - &ref_50
+        title: Sonarr
+        icon: hl-sonarr
+        url: https://sonarr.local.theinquisitive.me/
+        target: newtab
+        id: 5_480_sonarr
+      - &ref_51
+        title: Radarr
+        icon: hl-radarr
+        url: https://radarr.local.theinquisitive.me/
+        target: newtab
+        id: 6_480_radarr
+      - &ref_52
+        title: qBitTorrent
+        icon: hl-qbittorrent
+        url: https://qtorrent.local.theinquisitive.me/
+        target: newtab
+        id: 7_480_qbittorrent
+    filteredItems:
+      - *ref_45
+      - *ref_46
+      - *ref_47
+      - *ref_48
+      - *ref_49
+      - *ref_50
+      - *ref_51
+      - *ref_52
   - name: Home Control
     items:
-      - title: Home Assistant
+      - &ref_53
+        title: Home Assistant
         description: Smart home control
-        icon: smart-home/home-assistant.png
-      - title: Node-RED
+        icon: hl-home-assistant-alt
+        url: https://ha.local.theinquisitive.me/
+        target: newtab
+        id: 0_1162_homeassistant
+      - &ref_54
+        title: Node-RED
         description: Flow-based automation
         icon: smart-home/node-red.png
+        id: 1_1162_nodered
+    filteredItems:
+      - *ref_53
+      - *ref_54
   - name: Other Devices
     items:
-      - title: Modem
+      - &ref_55
+        title: Modem
         description: ISP Router Modem Combo
         icon: ""
-      - title: Wireless Access Point
+        id: 0_1253_modem
+      - &ref_56
+        title: Wireless Access Point
         description: View clients connected to WiFi
-      - title: Fing
-        description: Monitor connectivity issues, ISP quality, health checks and troubleshooting
+        id: 1_1253_wirelessaccesspoint
+      - &ref_57
+        title: Fing
+        description: >-
+          Monitor connectivity issues, ISP quality, health checks and
+          troubleshooting
         provider: Fing
         url: https://app.fing.com/
-      - title: Switch
+        id: 2_1253_fing
+      - &ref_58
+        title: Switch
         description: Manage VLANs on Ubiquity Ethernet switch
+        id: 3_1253_switch
+    filteredItems:
+      - *ref_55
+      - *ref_56
+      - *ref_57
+      - *ref_58
   - name: External Utilities
     displayData:
       collapsed: true
     items:
-      - title: Public IP
+      - &ref_59
+        title: Public IP
         description: Check public IP and associated data
         url: https://www.whatismyip.com/
-      - title: Who Is Lookup
+        id: 0_1823_publicip
+      - &ref_60
+        title: Who Is Lookup
         description: Check ICAN info for a given IP address or domain
         url: https://whois.domaintools.com/
-      - title: Speed Test
+        id: 1_1823_whoislookup
+      - &ref_61
+        title: Speed Test
         description: Upload + download speeds and latency
         url: https://speed.cloudflare.com/
-      - title: Mullvad Check
+        id: 2_1823_speedtest
+      - &ref_62
+        title: Mullvad Check
         description: Confirms a secure connection to Mullvad's WireGuard servers
         url: https://mullvad.net/check
+        id: 3_1823_mullvadcheck
+    filteredItems:
+      - *ref_59
+      - *ref_60
+      - *ref_61
+      - *ref_62
+  - name: Servers
+    displayData:
+      sortBy: default
+      rows: 1
+      cols: 1
+      collapsed: false
+      hideForGuests: false
+    items:
+      - &ref_63
+        title: Capella
+        description: Proxmox Server
+        icon: hl-proxmox
+        url: https://capella.local.theinquisitive.me
+        target: newtab
+        id: 0_746_capella
+      - &ref_64
+        title: Portainer (Capella)
+        description: Portainer on Capella
+        icon: hl-portainer
+        url: https://portainer-capella.local.theinquisitive.me/
+        target: newtab
+        id: 1_746_portainercapella
+      - &ref_65
+        title: Synology
+        description: Synology NAS
+        icon: hl-synology
+        url: https://antaresgo.local.theinquisitive.me/
+        target: newtab
+        id: 2_746_synology
+    filteredItems:
+      - *ref_63
+      - *ref_64
+      - *ref_65
+  - name: Controllers
+    displayData:
+      sortBy: default
+      rows: 1
+      cols: 1
+      collapsed: false
+      hideForGuests: false
+    items:
+      - &ref_66
+        title: Mahasen (Main)
+        description: Cloud Router Switch
+        icon: hl-mikrotik
+        url: https://mahasen.local.theinquisitive.me/
+        target: newtab
+        id: 0_1175_mahasenmain
+      - &ref_67
+        title: Gajaba (POE)
+        description: Server Rack POE Switch
+        icon: hl-tp-link
+        url: https://gajaba.local.theinquisitive.me/
+        target: newtab
+        id: 1_1175_gajabapoe
+      - &ref_68
+        title: Omada
+        description: Omada Controller
+        icon: hl-omada
+        url: https://omada.local.theinquisitive.me/
+        target: newtab
+        id: 2_1175_omada
+      - &ref_69
+        title: Gamunu (Desk SW)
+        description: Desktop Switch
+        icon: hl-mikrotik
+        url: https://gamunu.local.theinquisitive.me/
+        id: 3_1175_gamunudesksw
+      - &ref_70
+        title: Vijaya
+        description: 16 Port Managed Switch in Office Room
+        icon: hl-tplink
+        url: https://vijaya.local.theinquisitive.me/
+        target: newtab
+        id: 4_1175_vijaya
+      - &ref_71
+        title: Ravana
+        description: 8 Port L2 Switch
+        icon: hl-tplink
+        url: https://ravana.local.theinquisitive.me/
+        target: newtab
+        id: 5_1175_ravana
+    filteredItems:
+      - *ref_66
+      - *ref_67
+      - *ref_68
+      - *ref_69
+      - *ref_70
+      - *ref_71
