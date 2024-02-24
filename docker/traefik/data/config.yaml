@@ -124,8 +124,8 @@ http:
       entryPoints:
         - websecure
       rule: "Host(`ha.local.theinquisitive.me`)"
-      middlewares:
-        - default-headers
+      # middlewares:
+      #   - default-headers
       tls: {}
       service: ha
 
