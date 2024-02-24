@@ -1,0 +1,28 @@
+# WEBMAP-NMAP STACK docker-compose.yml in folder homes/me/compose/webmap
+version: '3.3'
+services:
+  nmap:
+    image: instrumentisto/nmap
+    container_name: nmap
+    command: -sT -A -T3 -oX tmp/myscan.xml 192.168.1.0/24
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - /srv/dev-disk-by-uuid-899011d029d9/dockerconfig/webmap:/tmp
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=100
+
+  webmap:
+    container_name: webmap
+    hostname: webmap
+    ports:
+      - '8001:8000'
+    volumes:
+      - /srv/dev-disk-by-uuid-/dockerconfig/webmap:/opt/xml
+    image: reborntc/webmap
+    environment:
+      - PUID=1000
+      - PGID=100
+    restart: unless-stopped
