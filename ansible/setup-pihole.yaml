@@ -1,7 +1,28 @@
-# - name: Install Docker
-#   hosts: pihole_nodes
-#   roles:
-#     - role: docker-ubuntu
+- name: Allow password-less sudo access
+  hosts: all
+  vars:
+    username: '{{ server_admin_user }}'
+  roles:
+    - role: allow-passwordless-sudo
+
+- name: Merge public keys
+  hosts: all
+  roles:
+    - role: update-authorized-key
+  vars:
+    username: '{{ server_admin_user }}'
+    keys:
+      - id_ed25519_homelab_asiri-devops
+
+- name: Update Packages
+  hosts: all
+  roles:
+    - role: apt
+
+- name: Setup docker
+  hosts: all
+  roles:
+    - role: setup-docker
 
 - name: Copy module folders
   hosts: pihole_nodes

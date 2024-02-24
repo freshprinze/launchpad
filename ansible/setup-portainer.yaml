@@ -1,7 +1,28 @@
-- name: Install Docker
-  hosts: portainer_nodes
+- name: Allow password-less sudo access
+  hosts: all
+  vars:
+    username: '{{ server_admin_user }}'
   roles:
-    - role: docker-ubuntu
+    - role: allow-passwordless-sudo
+
+- name: Merge public keys
+  hosts: all
+  roles:
+    - role: update-authorized-key
+  vars:
+    username: '{{ server_admin_user }}'
+    keys:
+      - id_ed25519_homelab_asiri-devops
+
+- name: Update Packages
+  hosts: all
+  roles:
+    - role: apt
+
+- name: Setup docker
+  hosts: all
+  roles:
+    - role: setup-docker
 
 - name: Copy module folders
   hosts: portainer_nodes
@@ -9,16 +30,9 @@
     - role: copy-folder
   vars:
     modules:
-      # traefik: '../docker/traefik'
       'media-downloader': '../docker/media-downloader'
       # portainer: '../docker/portainer'
-      # dashy: '../docker/dashy'
-      # 'uptime-kuma': '../docker/uptime-kuma'
       # syncthing: '../docker/syncthing'
       # paperless: '../docker/paperless'
       # netboot: '../docker/netboot'
       # webnut: '../docker/webnut'
-# - name: Setup modules
-#   hosts: portainer_nodes
-#   roles:
-#     - role: setup-modules
