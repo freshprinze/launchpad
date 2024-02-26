@@ -28,9 +28,9 @@ services:
       - ${SERVICE_DIR}/config:/config # optional
       - ${SERVICE_DIR}/assets:/assets # optional
 
-    labels:
-      - 'traefik.enable=true'
-      - 'traefik.http.routers.netboot.rule=Host(`${SERVICE_URL}`)'
-      - 'traefik.http.routers.netboot.entrypoints=websecure'
-      - 'traefik.http.routers.netboot.tls=true'
-      - 'traefik.http.services.netboot.loadBalancer.server.port=3000'
+    # labels:
+    #   - 'traefik.enable=true'
+    #   - 'traefik.http.routers.netboot.rule=Host(`${SERVICE_URL}`)'
+    #   - 'traefik.http.routers.netboot.entrypoints=websecure'
+    #   - 'traefik.http.routers.netboot.tls=true'
+    #   - 'traefik.http.services.netboot.loadBalancer.server.port=3000'
