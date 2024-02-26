@@ -179,6 +179,16 @@ http:
       tls: {}
       service: epson-printer
 
+    ## Brother ADS-1700
+    brother-scanner:
+      entryPoints:
+        - websecure
+      rule: "Host(`scanner.local.theinquisitive.me`)"
+      # middlewares:
+      #   - default-headers
+      tls: {}
+      service: brother-scanner
+
   services:
     # dashy:
     #   loadBalancer:
@@ -295,6 +305,12 @@ http:
       loadBalancer:
         servers:
           - url: "https://172.16.30.9"
+        passHostHeader: true
+
+    brother-scanner:
+      loadBalancer:
+        servers:
+          - url: "http://172.16.30.10"
         passHostHeader: true
 
   # allow self-signed certificates for proxied web services
