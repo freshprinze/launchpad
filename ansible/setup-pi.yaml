@@ -39,8 +39,9 @@
     - role: copy-folder
   vars:
     modules:
-      portainer: '../docker/portainer'
-      dashy: '../docker/dashy'
-      'uptime-kuma': '../docker/uptime-kuma'
+      traefik: '../docker/traefik'
+      # portainer: '../docker/portainer'
+      # dashy: '../docker/dashy'
+      # 'uptime-kuma': '../docker/uptime-kuma'
       # webnut: '../docker/webnut'
   tags: mods

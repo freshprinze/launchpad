@@ -1,0 +1,49 @@
+version: '3.9'
+
+services:
+  db:
+    image: mariadb:11.3-jammy
+    container_name: SNIPE-IT-DB
+    restart: on-failure:5
+    security_opt:
+      - no-new-privileges:true
+    hostname: db
+    environment:
+      - MYSQL_ROOT_PASSWORD=snipe
+      - MYSQL_USER=snipe
+      - MYSQL_PASSWORD=snipe
+      - MYSQL_DATABASE=snipe
+      - TZ=${TIMEZONE}
+    volumes:
+      - /volume1/docker/snipeit/db:/var/lib/mysql:rw
+
+  snipeit:
+    image: lscr.io/linuxserver/snipe-it:latest
+    container_name: SNIPE-IT
+    restart: on-failure:5
+    healthcheck:
+      test: curl -f http://localhost:80/ || exit 1
+    depends_on:
+      - db
+    volumes:
+      - /volume1/docker/snipeit/config:/config:rw
+    environment:
+      - TZ=${TIMEZONE}
+      - APP_URL=https://snipeit.yourname.synology.me
+      # - NGINX_APP_URL=https://snipeit.yourname.synology.me
+      - MYSQL_PORT_3306_TCP_ADDR=db
+      - MYSQL_PORT_3306_TCP_PORT=3306
+      - MYSQL_DATABASE=snipe
+      - MYSQL_USER=snipe
+      - MYSQL_PASSWORD=snipe
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - MAIL_PORT_587_TCP_ADDR=smtp.gmail.com
+      - MAIL_PORT_587_TCP_PORT=587
+      - MAIL_ENV_FROM_ADDR=${MAIL_ENV_FROM_ADDR}
+      - MAIL_ENV_FROM_NAME=${MAIL_ENV_FROM_NAME}
+      - MAIL_ENV_ENCRYPTION=TLS
+      - MAIL_ENV_USERNAME=${MAIL_ENV_USERNAME}
+      - MAIL_ENV_PASSWORD=${MAIL_ENV_PASSWORD}
+    ports:
+      - 1339:80
