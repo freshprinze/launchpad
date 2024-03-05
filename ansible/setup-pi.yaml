@@ -24,7 +24,7 @@
   roles:
     - role: setup-docker
 
-- name: Setup traefik
+- name: Configure traefik
   hosts: all
   roles:
     - role: copy-folder
@@ -39,7 +39,6 @@
     - role: copy-folder
   vars:
     modules:
-      traefik: '../docker/traefik'
       # portainer: '../docker/portainer'
       # dashy: '../docker/dashy'
       # 'uptime-kuma': '../docker/uptime-kuma'

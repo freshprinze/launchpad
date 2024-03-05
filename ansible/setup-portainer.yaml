@@ -36,3 +36,4 @@
       # paperless: '../docker/paperless'
       # netboot: '../docker/netboot'
       # webnut: '../docker/webnut'
+  tags: mods

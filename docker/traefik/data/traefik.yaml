@@ -35,7 +35,7 @@ certificatesResolvers:
       email: asiri.warnakulasuriya@gmail.com
       storage: acme.json
       dnsChallenge:
-        provider: namecheap
+        provider: cloudflare
         resolvers:
           - "1.1.1.1:53"
           - "8.8.8.8:53"
