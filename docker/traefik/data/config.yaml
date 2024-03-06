@@ -169,6 +169,16 @@ http:
       tls: {}
       service: radarr
 
+    ## netbox
+    netbox:
+      entryPoints:
+        - websecure
+      rule: "Host(`netbox.local.theinquisitive.me`)"
+      # middlewares:
+      #   - default-headers
+      tls: {}
+      service: netbox
+
     ## Epson WF-110
     epson-printer:
       entryPoints:
@@ -299,6 +309,12 @@ http:
       loadBalancer:
         servers:
           - url: "http://172.16.20.40:7878"
+        passHostHeader: true
+
+    netbox:
+      loadBalancer:
+        servers:
+          - url: "http://172.16.20.40:9458"
         passHostHeader: true
 
     epson-printer:

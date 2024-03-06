@@ -10,7 +10,8 @@ services:
     ports:
       - 9458:8080
 
-    environment: &ref_0 # - ALLOWED_HOSTS=[172.16.20.8, 0.0.0.0]
+    environment: &ref_0
+      - 'ALLOWED_HOSTS=localhost 127.0.0.1'
       - CORS_ORIGIN_ALLOW_ALL=True
       - DB_HOST=postgres
       - DB_NAME=${POSTGRES_DB}
