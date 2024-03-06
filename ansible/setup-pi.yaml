@@ -43,4 +43,5 @@
       # dashy: '../docker/dashy'
       # 'uptime-kuma': '../docker/uptime-kuma'
       # webnut: '../docker/webnut'
+      upsnap: '../docker/upsnap'
   tags: mods

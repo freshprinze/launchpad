@@ -1,17 +1,22 @@
 version: '3.8'
 
+networks:
+  discovery:
+    external: true
+
 services:
   upsnap:
     container_name: upsnap
     image: ghcr.io/seriousm4x/upsnap:4
-
-    network_mode: host
     restart: unless-stopped
+
+    networks:
+      - discovery
 
     user: 1000:1000
 
     ports:
-      - 8484:5000
+      - 8090:8090
 
     environment:
       - TZ=Asia/Colombo # Set container timezone for cron schedules
@@ -30,8 +35,16 @@ services:
     # # or install custom packages for shutdown
     # entrypoint: /bin/sh -c "apk update && apk add --no-cache <YOUR_PACKAGE> && rm -rf /var/cache/apk/* && ./upsnap serve --http 0.0.0.0:8090"
     healthcheck:
-      test: curl -fs "http://localhost:5000/api/health" || exit 1
+      test: curl -fs "http://localhost:8090/api/health" || exit 1
       interval: 10s
 
     volumes:
       - ${SERVICE_DIR}/data:/app/pb_data
+
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.upsnap.rule=Host(`${SERVICE_URL}`)'
+      - 'traefik.http.routers.upsnap.entrypoints=websecure'
+      - 'traefik.http.routers.upsnap.tls=true'
+      - 'traefik.http.services.upsnap.loadBalancer.server.port=8090'
+      - 'traefik.docker.network=discovery'
