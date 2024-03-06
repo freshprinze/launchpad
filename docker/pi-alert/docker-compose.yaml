@@ -1,9 +1,9 @@
 ---
 version: '3.9'
 
-networks:
-  discovery:
-    external: true
+# networks:
+#   discovery:
+#     external: true
 
 services:
   pi.alert:
@@ -14,8 +14,8 @@ services:
     image: jokobsk/pi.alert:latest
     restart: on-failure:5
 
-    networks:
-      - discovery
+    # networks:
+    #   - discovery
 
     ports:
       - "20211:20211"
@@ -29,18 +29,18 @@ services:
       - ${SERVICE_DIR}/logs:/home/pi/pialert/front/log:rw
 
     environment:
-      TZ: Asia/Colombo
-      PORT: 20211
-      HOST_USER_ID: 1000
-      HOST_USER_GID: 1000
+      - TZ=Asia/Colombo
+      - PORT=20211
+      - HOST_USER_ID=1000
+      - HOST_USER_GID=1000
 
     healthcheck:
       test: curl -f http://localhost:20211/ || exit 1
 
-    labels:
-      - 'traefik.enable=true'
-      - 'traefik.http.routers.pi-alert.rule=Host(`${SERVICE_URL}`)'
-      - 'traefik.http.routers.pi-alert.entrypoints=websecure'
-      - 'traefik.http.routers.pi-alert.tls=true'
-      - 'traefik.http.services.pi-alert.loadBalancer.server.port=20211'
-      - 'traefik.docker.network=discovery'
+    # labels:
+    #   - 'traefik.enable=true'
+    #   - 'traefik.http.routers.pi-alert.rule=Host(`${SERVICE_URL}`)'
+    #   - 'traefik.http.routers.pi-alert.entrypoints=websecure'
+    #   - 'traefik.http.routers.pi-alert.tls=true'
+    #   - 'traefik.http.services.pi-alert.loadBalancer.server.port=20211'
+    #   - 'traefik.docker.network=discovery'

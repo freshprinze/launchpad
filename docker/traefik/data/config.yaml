@@ -1,21 +1,20 @@
 http:
   routers:
-    ## dashy
-    # dashy:
-    #   entryPoints:
-    #     - websecure
-    #   rule: "Host(`home.local.theinquisitive.me`)"
-    #   middlewares:
-    #     - default-headers
-    #   tls: {}
-    #   service: dashy
-
     pfsense:
       entryPoints:
         - websecure
       rule: "Host(`pfsense.local.theinquisitive.me`)"
       middlewares:
         - default-headers
+      tls: {}
+      service: pfsense
+
+    slt4g:
+      entryPoints:
+        - websecure
+      rule: "Host(`slt4g.local.theinquisitive.me`)"
+      # middlewares:
+      #   - default-headers
       tls: {}
       service: pfsense
 
@@ -128,6 +127,16 @@ http:
       #   - default-headers
       tls: {}
       service: ha
+
+    ## homeassistant
+    pialert:
+      entryPoints:
+        - websecure
+      rule: "Host(`pialert.local.theinquisitive.me`)"
+      # middlewares:
+      #   - default-headers
+      tls: {}
+      service: pialert
 
     ## qbittorrent
     qbittorrent:
