@@ -11,7 +11,6 @@ services:
       - 9458:8080
 
     environment: &ref_0
-      - 'ALLOWED_HOSTS=localhost 127.0.0.1'
       - CORS_ORIGIN_ALLOW_ALL=True
       - DB_HOST=postgres
       - DB_NAME=${POSTGRES_DB}
@@ -19,7 +18,7 @@ services:
       - DB_USER=${POSTGRES_USER}
       - GRAPHQL_ENABLED=true
       - HOUSEKEEPING_INTERVAL=86400
-      - MEDIA_ROOT=${SERVICE_DIR}/netbox-media
+      - MEDIA_ROOT=${REMOTE_MOUNT_DIR}/media
       - REDIS_CACHE_DATABASE=1
       - REDIS_CACHE_HOST=redis-cache
       - REDIS_CACHE_INSECURE_SKIP_TLS_VERIFY=false
@@ -48,9 +47,9 @@ services:
 
     volumes: &ref_1
       - '${SERVICE_DIR}/config:/etc/netbox/config:z,ro'
-      - '${SERVICE_DIR}/netbox-media:/opt/netbox/netbox/media:rw'
-      - '${SERVICE_DIR}/netbox-reports:/opt/netbox/netbox/reports:rw'
-      - '${SERVICE_DIR}/netbox-scripts:/opt/netbox/netbox/scripts:rw'
+      - '${REMOTE_MOUNT_DIR}/media:/opt/netbox/netbox/media:rw'
+      - '${REMOTE_MOUNT_DIR}/reports:/opt/netbox/netbox/reports:rw'
+      - '${REMOTE_MOUNT_DIR}/scripts:/opt/netbox/netbox/scripts:rw'
 
   netbox-worker:
     image: docker.io/netboxcommunity/netbox:${VERSION-v3.7-2.8.0}
@@ -97,7 +96,7 @@ services:
       - 'POSTGRES_PASSWORD=${POSTGRES_PASSWORD}'
       - 'POSTGRES_USER=${POSTGRES_USER}'
     volumes:
-      - '${SERVICE_DIR}/netbox-postgres:/var/lib/postgresql/data'
+      - '${REMOTE_MOUNT_DIR}/postgres:/var/lib/postgresql/data'
 
   redis:
     image: docker.io/redis:7-alpine
@@ -108,7 +107,7 @@ services:
     environment:
       - 'REDIS_PASSWORD=${REDIS_PASSWORD}'
     volumes:
-      - '${SERVICE_DIR}/netbox-redis-data:/data'
+      - '${REMOTE_MOUNT_DIR}/redis-data:/data'
 
   redis-cache:
     image: docker.io/redis:7-alpine
@@ -119,4 +118,4 @@ services:
     environment:
       - 'REDIS_PASSWORD=${REDIS_CACHE_PASSWORD}'
     volumes:
-      - '${SERVICE_DIR}/netbox-redis-cache:/data'
+      - '${REMOTE_MOUNT_DIR}/redis-cache:/data'
