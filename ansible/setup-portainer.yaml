@@ -30,7 +30,8 @@
     - role: copy-folder
   vars:
     modules:
-      'media-downloader': '../docker/media-downloader'
+      # 'media-downloader': '../docker/media-downloader'
+      netbox: '../docker/netbox'
       # portainer: '../docker/portainer'
       # syncthing: '../docker/syncthing'
       # paperless: '../docker/paperless'

@@ -1,7 +1,6 @@
 version: '3.4'
-
 services:
-  netbox: &netbox
+  netbox:
     image: docker.io/netboxcommunity/netbox:${VERSION-v3.7-2.8.0}
     depends_on:
       - postgres
@@ -11,8 +10,7 @@ services:
     ports:
       - 9458:8080
 
-    environment:
-      - ALLOWED_HOSTS=['172.16.20.8']
+    environment: &ref_0 # - ALLOWED_HOSTS=[172.16.20.8, 0.0.0.0]
       - CORS_ORIGIN_ALLOW_ALL=True
       - DB_HOST=postgres
       - DB_NAME=${POSTGRES_DB}
@@ -20,7 +18,7 @@ services:
       - DB_USER=${POSTGRES_USER}
       - GRAPHQL_ENABLED=true
       - HOUSEKEEPING_INTERVAL=86400
-      - MEDIA_ROOT=${SERVICE_DIR}/media
+      - MEDIA_ROOT=${SERVICE_DIR}/netbox-media
       - REDIS_CACHE_DATABASE=1
       - REDIS_CACHE_HOST=redis-cache
       - REDIS_CACHE_INSECURE_SKIP_TLS_VERIFY=false
@@ -33,92 +31,91 @@ services:
       - REDIS_SSL=false
       - RELEASE_CHECK_URL=https://api.github.com/repos/netbox-community/netbox/releases
       - SECRET_KEY=${SECRET_KEY}
-      - SKIP_SUPERUSER=true
       - WEBHOOKS_ENABLED=true
+      - SKIP_SUPERUSER=false
+      - SUPERUSER_EMAIL=${SUPERUSER_EMAIL}
+      - SUPERUSER_NAME=${SUPERUSER_NAME}
+      - SUPERUSER_PASSWORD=${SUPERUSER_PASSWORD}
+
     user: 'unit:root'
+
     healthcheck:
       start_period: 60s
       timeout: 3s
       interval: 15s
       test: 'curl -f http://localhost:8080/api/ || exit 1'
-    volumes:
-      - ${SERVICE_DIR}/config:/etc/netbox/config:z,ro
-      - netbox-media-files:/opt/netbox/netbox/media:rw
-      - netbox-reports-files:/opt/netbox/netbox/reports:rw
-      - netbox-scripts-files:/opt/netbox/netbox/scripts:rw
+
+    volumes: &ref_1
+      - '${SERVICE_DIR}/config:/etc/netbox/config:z,ro'
+      - '${SERVICE_DIR}/netbox-media:/opt/netbox/netbox/media:rw'
+      - '${SERVICE_DIR}/netbox-reports:/opt/netbox/netbox/reports:rw'
+      - '${SERVICE_DIR}/netbox-scripts:/opt/netbox/netbox/scripts:rw'
 
   netbox-worker:
-    <<: *netbox
+    image: docker.io/netboxcommunity/netbox:${VERSION-v3.7-2.8.0}
     depends_on:
       netbox:
         condition: service_healthy
+    environment: *ref_0
+
+    user: 'unit:root'
+    healthcheck:
+      start_period: 20s
+      timeout: 3s
+      interval: 15s
+      test: ps -aux | grep -v grep | grep -q rqworker || exit 1
+    volumes: *ref_1
     command:
       - /opt/netbox/venv/bin/python
       - /opt/netbox/netbox/manage.py
       - rqworker
-    healthcheck:
-      start_period: 20s
-      timeout: 3s
-      interval: 15s
-      test: 'ps -aux | grep -v grep | grep -q rqworker || exit 1'
 
   netbox-housekeeping:
-    <<: *netbox
+    image: 'docker.io/netboxcommunity/netbox:${VERSION-v3.7-2.8.0}'
     depends_on:
       netbox:
         condition: service_healthy
-    command:
-      - /opt/netbox/housekeeping.sh
+    environment: *ref_0
+
+    user: 'unit:root'
+
     healthcheck:
       start_period: 20s
       timeout: 3s
       interval: 15s
-      test: 'ps -aux | grep -v grep | grep -q housekeeping || exit 1'
+      test: ps -aux | grep -v grep | grep -q housekeeping || exit 1
 
-  # postgres
+    volumes: *ref_1
+    command:
+      - /opt/netbox/housekeeping.sh
+
   postgres:
     image: docker.io/postgres:16-alpine
     environment:
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_USER=${POSTGRES_USER}
+      - 'POSTGRES_DB=${POSTGRES_DB}'
+      - 'POSTGRES_PASSWORD=${POSTGRES_PASSWORD}'
+      - 'POSTGRES_USER=${POSTGRES_USER}'
     volumes:
-      - netbox-postgres-data:/var/lib/postgresql/data
+      - '${SERVICE_DIR}/netbox-postgres:/var/lib/postgresql/data'
 
-  # redis
   redis:
     image: docker.io/redis:7-alpine
-
     command:
       - sh
-      - -c # this is to evaluate the $REDIS_PASSWORD from the env
-      - redis-server --appendonly yes --requirepass $$REDIS_PASSWORD ## $$ because of docker-compose
+      - '-c'
+      - redis-server --appendonly yes --requirepass $$REDIS_PASSWORD
     environment:
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - 'REDIS_PASSWORD=${REDIS_PASSWORD}'
     volumes:
-      - netbox-redis-data:/data
+      - '${SERVICE_DIR}/netbox-redis-data:/data'
 
   redis-cache:
     image: docker.io/redis:7-alpine
     command:
       - sh
-      - -c # this is to evaluate the $REDIS_PASSWORD from the env
-      - redis-server --requirepass $$REDIS_PASSWORD ## $$ because of docker-compose
+      - '-c'
+      - redis-server --requirepass $$REDIS_PASSWORD
     environment:
-      - REDIS_PASSWORD=${REDIS_CACHE_PASSWORD}
+      - 'REDIS_PASSWORD=${REDIS_CACHE_PASSWORD}'
     volumes:
-      - netbox-redis-cache-data:/data
-
-volumes:
-  netbox-media-files:
-    driver: local
-  netbox-postgres-data:
-    driver: local
-  netbox-redis-cache-data:
-    driver: local
-  netbox-redis-data:
-    driver: local
-  netbox-reports-files:
-    driver: local
-  netbox-scripts-files:
-    driver: local
+      - '${SERVICE_DIR}/netbox-redis-cache:/data'
